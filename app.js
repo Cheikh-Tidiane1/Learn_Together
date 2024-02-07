@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://Learn_Cwh:QKvY07ebLXBckbPn@clusterlt.hvi44t0.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -16,5 +17,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+app.use('/wac/auth', userRoutes);
 
 module.exports = app ;
