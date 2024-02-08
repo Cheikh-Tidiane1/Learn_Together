@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema(
     date_creation: Date,
     date_update: Date,
     date_delete: Date
-})
+});
 
 userSchema.plugin(uniqueValidator);
 
