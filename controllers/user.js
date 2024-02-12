@@ -9,8 +9,7 @@ exports.userSignUp = (req, res, next) => {
       const user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: hash,
-        date_creation: new Date(),
+        password: hash
       });
       user
         .save()
@@ -47,3 +46,5 @@ exports.userLogin = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+
