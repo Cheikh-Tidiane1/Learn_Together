@@ -9,4 +9,4 @@ const courseSchema = mongoose.Schema({
   delete_At: { type: Date}
 });
 
-module.exports = mongoose.Schema('Course',courseSchema);
+module.exports = mongoose.model('Course',courseSchema);
