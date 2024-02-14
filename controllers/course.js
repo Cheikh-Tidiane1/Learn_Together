@@ -1,14 +1,24 @@
 const Course = require("../models/Course");
-
-exports.createCourse = (req, res, next) => {
-  delete req.body._id;
-  const course = new Course({
-    ...req.body,
-  });
-  course
-    .save()
-    .then(() => res.status(201).json({ message: "Cours crée" }))
-    .catch((error) => res.status(400).json({ error }));
+const User = require("../models/User");
+exports.createCourse = async (req, res, next) => {
+  try {
+    delete req.body._id;
+    const course = new Course({
+      ...req.body,
+    });
+    await course.save();
+    const userUpdate = await User.findByIdAndUpdate(
+      req.auth.userId,
+      { $push: { courses: course._id } },
+      { new: true }
+    );
+    if (!userUpdate) {
+      throw new Error("User not found");
+    }
+    res.status(201).json({ message: "Cours crée" });
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.getOneCourse = (req, res, next) => {
