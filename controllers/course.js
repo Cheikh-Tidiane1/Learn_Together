@@ -13,7 +13,7 @@ exports.createCourse = async (req, res, next) => {
       { new: true }
     );
     if (!userUpdate) {
-      throw new Error("User not found");
+      throw new Error("Utilisateur non trouvé");
     }
     res.status(201).json({ message: "Cours crée" });
   } catch (error) {
