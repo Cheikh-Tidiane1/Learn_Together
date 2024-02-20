@@ -7,4 +7,4 @@ const ChapterTypeSchema = mongoose.Schema({
   delete_At: { type: Date }
 });
 
-module.exports = mongoose.model("ChapterTypeSchema", ChapterTypeSchema);
+module.exports = mongoose.model("ChapterType", ChapterTypeSchema);

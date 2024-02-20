@@ -13,7 +13,7 @@ exports.createChapterType = (req, res, next) => {
 };
 
 exports.deleteChapterType = (req, res, next) => {
-  ChapterType.deleteOne({ id: req.params.id })
+  ChapterType.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: "Chapitre supprimé" }))
     .catch((error) => res.status(400).json({ error }));
 };
@@ -25,7 +25,7 @@ exports.getAllChapterType = (req, res, next) => {
 };
 
 exports.getOneChapterType = (req, res, next) => {
-  ChapterType.findOne({ id: req.params.id })
+  ChapterType.findOne({ _id: req.params.id })
     .then((chapterType) => res.status(200).json(chapterType))
     .catch((error) => res.status(400).json({ error }));
 };

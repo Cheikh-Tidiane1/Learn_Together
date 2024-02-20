@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
+const chapterTypeRoutes = require("./routes/chapterType");
 
 mongoose
   .connect(
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/wac/chapterType", chapterTypeRoutes);
 app.use("/wac/course", courseRoutes);
 app.use("/wac/auth", userRoutes);
 
