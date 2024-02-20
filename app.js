@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
+const chapterRoutes = require("./routes/chapter");
 const chapterTypeRoutes = require("./routes/chapterType");
 
 mongoose
@@ -28,6 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/wac/chapter", chapterRoutes);
 app.use("/wac/chapterType", chapterTypeRoutes);
 app.use("/wac/course", courseRoutes);
 app.use("/wac/auth", userRoutes);
