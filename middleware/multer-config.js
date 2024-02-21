@@ -1,0 +1,23 @@
+const multer = require("multer");
+
+const MIMES_TYPES = {
+  "video/mp4": "mp4",
+  "video/mpeg": "mpeg",
+  "video/quicktime": "mov",
+  "video/x-msvideo": "avi",
+  "video/x-flv": "flv",
+  "video/webm": "webm",
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "videos");
+  },
+  filename: (req, file, callback) => {
+    const name = file.originalname.split(" ").join("_");
+    const extension = MIMES_TYPES[file.mimetype];
+    callback(null, name + Date.now() + "." + extension);
+  },
+});
+
+module.exports = multer({ storage }).single("video");
