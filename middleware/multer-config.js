@@ -1,4 +1,5 @@
 const multer = require("multer");
+const path = require("path");
 
 const MIMES_TYPES = {
   "video/mp4": "mp4",
@@ -11,7 +12,8 @@ const MIMES_TYPES = {
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, "videos");
+    const uploadPath = path.join(__dirname, "public", "videos");
+    callback(null, uploadPath);
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
