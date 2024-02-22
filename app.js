@@ -1,10 +1,11 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
 const chapterRoutes = require("./routes/chapter");
 const chapterTypeRoutes = require("./routes/chapterType");
+const path = require("path");
+const app = express();
 
 mongoose
   .connect(
@@ -33,5 +34,6 @@ app.use("/wac/chapter", chapterRoutes);
 app.use("/wac/chapterType", chapterTypeRoutes);
 app.use("/wac/course", courseRoutes);
 app.use("/wac/auth", userRoutes);
+app.use("/videos", express.static(path.join('public', 'videos')));
 
 module.exports = app;
