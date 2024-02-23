@@ -4,7 +4,7 @@ const chapterCtrl = require("../controllers/chapter");
 const multer = require("../middleware/multer-config");
 const auth = require("../middleware/auth");
 
-router.post("/uploadVideo", auth, multer, chapterCtrl.createChapter);
+router.post("/", auth, multer, chapterCtrl.createChapter);
 router.delete("/:id",auth, chapterCtrl.deleteChapter);
 router.put("/:id",auth, chapterCtrl.modifyChapter);
 router.get("/",auth, chapterCtrl.getAllChapter);
