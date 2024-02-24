@@ -5,9 +5,9 @@ const multer = require("../middleware/multer-config");
 const auth = require("../middleware/auth");
 
 router.post("/", auth, multer, chapterCtrl.createChapter);
-router.delete("/:id",auth, chapterCtrl.deleteChapter);
-router.put("/:id",auth, chapterCtrl.modifyChapter);
-router.get("/",auth, chapterCtrl.getAllChapter);
-router.get("/:id",auth, chapterCtrl.getOneChapter);
+router.delete("/:id", auth, chapterCtrl.deleteChapter);
+router.put("/:id", auth, multer, chapterCtrl.modifyChapter);
+router.get("/", auth, chapterCtrl.getAllChapter);
+router.get("/:id", auth, chapterCtrl.getOneChapter);
 
 module.exports = router;

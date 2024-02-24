@@ -1,7 +1,6 @@
 const Chapter = require("../models/Chapter");
 
 exports.createChapter = (req, res, next) => {
-  
   const chapterObject = JSON.parse(req.body.chapter);
   delete chapterObject._id;
   delete chapterObject._userId;
@@ -43,7 +42,26 @@ exports.getOneChapter = (req, res, next) => {
 };
 
 exports.modifyChapter = (req, res, next) => {
-  Chapter.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Chapitre modifié" }))
-    .catch((error) => res.status(400).json({ error }));
+  const chapterObject = req.file
+    ? {
+        ...JSON.parse(req.body.chapter),
+        imageUrl: `${req.protocol}://${req.get("host")}/public/videos/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
+
+  delete chapterObject._userId;
+  Chapter.findOne({ _id: req.params.id })
+    .then((chapter) => {
+      Chapter.updateOne(
+        { _id: req.params.id },
+        { ...chapterObject, _id: req.params.id }
+      )
+        .then(() => res.status(200).json({ message: "Chapitre modifié !" }))
+        .catch((error) => res.status(401).json({ error }));
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
 };
