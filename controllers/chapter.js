@@ -1,4 +1,5 @@
 const Chapter = require("../models/Chapter");
+const fs = require("fs");
 
 exports.createChapter = (req, res, next) => {
   const chapterObject = JSON.parse(req.body.chapter);
@@ -24,9 +25,20 @@ exports.createChapter = (req, res, next) => {
 };
 
 exports.deleteChapter = (req, res, next) => {
-  Chapter.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Chapitre supprimé" }))
-    .catch((error) => res.status(400).json({ error }));
+  Chapter.findOne({ _id: req.params.id })
+    .then((chapter) => {
+      const filename = chapter.videoUrl.split("/public/videos/")[2];
+      fs.unlink(`public/videos/${filename}`, () => {
+        Chapter.deleteOne({ _id: req.params.id })
+          .then(() => {
+            res.status(200).json({ message: "Chapitre supprimé !" });
+          })
+          .catch((error) => res.status(401).json({ error }));
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 };
 
 exports.getAllChapter = (req, res, next) => {
@@ -53,7 +65,7 @@ exports.modifyChapter = (req, res, next) => {
 
   delete chapterObject._userId;
   Chapter.findOne({ _id: req.params.id })
-    .then((chapter) => {
+    .then(() => {
       Chapter.updateOne(
         { _id: req.params.id },
         { ...chapterObject, _id: req.params.id }
